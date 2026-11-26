@@ -1,24 +1,40 @@
 # Plataforma de Avaliação de Filmes
 
-Modelagem lógica de um banco de dados para uma plataforma de avaliação de filmes. Usuários podem registrar os filmes que assistiram, dar notas, escrever avaliações e comentar nas avaliações de outros usuários.
+Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuários registram os filmes que assistiram, atribuem notas, escrevem avaliações e comentam nas avaliações de outros usuários. O repositório reúne o sumário executivo do domínio, o esquema conceitual (EER) e a modelagem lógica.
 
+> Projeto acadêmico da disciplina de Banco de Dados (BAN).
 
-## Visão geral
+**Usuários.** Para participar da plataforma, a pessoa se cadastra informando um *username* único, um nome de exibição e um e-mail, podendo preencher opcionalmente uma biografia para o seu perfil. O sistema registra a data de cadastro. Todo usuário é de um dos dois tipos, **Básico** ou **Premium**.
 
-O modelo é composto por **6 entidades** principais:
+**Filmes.** A plataforma mantém um catálogo de filmes, cada um com título, sinopse, idioma original, classificação indicativa (L, 10, 12, 14, 16 ou 18 anos), duração em minutos e data de lançamento. Cada filme é classificado em um ou mais **gêneros** (por exemplo, drama, comédia ou ficção científica), e um mesmo gênero pode reunir vários filmes.
 
-| Entidade | Descrição |
+**Pessoas.** Os profissionais envolvidos nas produções são cadastrados com nome, data de nascimento e biografia. Cada pessoa pode ser associada aos filmes em três funções: **direção**, **roteiro** e **elenco**. Uma mesma pessoa pode exercer funções diferentes, inclusive no mesmo filme, e um filme pode ter várias pessoas em cada função.
+
+**Avaliações.** Ao assistir a um filme, o usuário registra uma avaliação contendo uma nota de 1 a 5, um texto opcional e a data em que o filme foi assistido. A avaliação é o elo entre um usuário e um filme: um usuário pode avaliar vários filmes, e um filme pode ser avaliado por vários usuários.
+
+**Comentários.** As avaliações podem ser comentadas pelos usuários. Cada comentário contém um texto e a data em que foi postado, pertence a uma única avaliação e é escrito por um único usuário. Uma avaliação pode ter vários comentários ou nenhum.
+
+## 1. Esquema conceitual (EER)
+
+> foto aqui
+
+### Restrições de integridade (RIs) e observações
+
+| Nº | Restrição / observação |
 |---|---|
-| **Usuários** | Pessoas cadastradas na plataforma, com perfil público e hierarquia (Básico ou Premium). |
-| **Filmes** | Catálogo de filmes com título, sinopse, idioma, classificação indicativa, duração e data de lançamento. |
-| **Pessoas** | Profissionais do cinema (diretores, roteiristas e atores). |
-| **Avaliações** | Nota e texto de um usuário sobre um filme, com a data em que foi assistido. |
-| **Comentários** | Respostas e discussões escritas por usuários nas avaliações. |
-| **Gêneros** | Categorias dos filmes (ação, drama, comédia etc.). |
+| RI1 | O `username` do usuário deve ser único. |
+| RI2 | A `nota` da avaliação deve estar entre 1 e 5. |
+| RI3 | A `classificacao_indicativa` do filme deve ser um dos valores: L, 10, 12, 14, 16 ou 18 anos. |
+| RI4 | Todo usuário deve ser Básico ou Premium (a confirmar se a generalização é disjunta e total). |
+| RI5 | Todo filme deve ter pelo menos um gênero. |
+| RI6 | Todo comentário pertence a exatamente uma avaliação e tem exatamente um autor. |
+| RI7 | `texto_avaliacao` e `biografia` (de usuários) são opcionais. |
 
-## Dicionário de dados
+---
 
-### Usuários
+## 2. Dicionário de dados
+
+#### Usuários
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
@@ -29,9 +45,19 @@ O modelo é composto por **6 entidades** principais:
 | `biografia` | Texto | 100 | Opcional | Biografia no perfil |
 | `data_cadastro` | Data | – | – | Data de criação do perfil |
 
-**Hierarquia de usuários:** `Básico` e `Premium` (especializações da entidade Usuários).
+#### Básico
 
-### Filmes
+| Atributo | Domínio | Tamanho | Restrição | Descrição |
+|---|---|---|---|---|
+| `ID_usuario` | Numérico | – | Chave primária/estrangeira | Usuário do tipo Básico (referencia Usuários) |
+
+#### Premium
+
+| Atributo | Domínio | Tamanho | Restrição | Descrição |
+|---|---|---|---|---|
+| `ID_usuario` | Numérico | – | Chave primária/estrangeira | Usuário do tipo Premium (referencia Usuários) |
+
+#### Filmes
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
@@ -43,7 +69,7 @@ O modelo é composto por **6 entidades** principais:
 | `duracao` | Numérico | – | – | Duração em minutos |
 | `data_lancamento` | Data | – | – | Data de lançamento |
 
-### Pessoas
+#### Pessoas
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
@@ -52,16 +78,23 @@ O modelo é composto por **6 entidades** principais:
 | `data_nascimento` | Data | – | – | Data de nascimento |
 | `biografia` | Texto | 100 | – | Biografia da pessoa |
 
-### Avaliações
+#### Gêneros
+
+| Atributo | Domínio | Tamanho | Restrição | Descrição |
+|---|---|---|---|---|
+| `ID_genero` | Numérico | – | Chave primária | Código do gênero |
+| `nome` | Texto | 100 | – | Nome do gênero |
+
+#### Avaliações
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
 | `ID_avaliacao` | Numérico | – | Chave primária | Código da avaliação |
-| `nota` | Numérico | – | Entre 1 e 5 | Nota dada ao filme |
+| `nota` | Numérico | – | Entre 1 e 5 | Nota da avaliação |
 | `texto_avaliacao` | Texto | 100 | Opcional | Texto da avaliação |
 | `data_assistido` | Data | – | – | Data em que o filme foi assistido |
 
-### Comentários
+#### Comentários
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
@@ -69,14 +102,37 @@ O modelo é composto por **6 entidades** principais:
 | `texto` | Texto | 100 | – | Texto do comentário |
 | `data_criacao` | Data | – | – | Data em que o comentário foi postado |
 
-### Gêneros
+#### Relação Direção
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
-| `ID_genero` | Numérico | – | Chave primária | Código do gênero |
-| `nome` | Texto | 20 | Único | Nome do gênero |
+| `ID_filme` | Numérico | – | Chave primária/estrangeira | Filme dirigido (referencia Filmes) |
+| `ID_pessoa` | Numérico | – | Chave primária/estrangeira | Pessoa que dirigiu (referencia Pessoas) |
 
-## Relacionamentos e cardinalidades
+#### Relação Roteiro
+
+| Atributo | Domínio | Tamanho | Restrição | Descrição |
+|---|---|---|---|---|
+| `ID_filme` | Numérico | – | Chave primária/estrangeira | Filme roteirizado (referencia Filmes) |
+| `ID_pessoa` | Numérico | – | Chave primária/estrangeira | Pessoa que roteirizou (referencia Pessoas) |
+
+#### Relação Elenco
+
+| Atributo | Domínio | Tamanho | Restrição | Descrição |
+|---|---|---|---|---|
+| `ID_filme` | Numérico | – | Chave primária/estrangeira | Filme em que atuou (referencia Filmes) |
+| `ID_pessoa` | Numérico | – | Chave primária/estrangeira | Pessoa que atuou (referencia Pessoas) |
+
+#### Relação Categorização
+
+| Atributo | Domínio | Tamanho | Restrição | Descrição |
+|---|---|---|---|---|
+| `ID_filme` | Numérico | – | Chave primária/estrangeira | Filme (referencia Filmes) |
+| `ID_genero` | Numérico | – | Chave primária/estrangeira | Gênero do filme (referencia Gêneros) |
+
+---
+
+## 3. Relacionamentos e cardinalidades
 
 | Entidade A | Relacionamento | Entidade B | Cardinalidade | Descrição |
 |---|---|---|---|---|
@@ -88,21 +144,4 @@ O modelo é composto por **6 entidades** principais:
 | Filmes | Roteiro | Pessoas | (0,N) / (0,N) | Um filme pode ter vários roteiristas; uma pessoa pode roteirizar vários filmes. |
 | Filmes | Elenco | Pessoas | (0,N) / (0,N) | Um filme pode ter vários atores; uma pessoa pode atuar em vários filmes. |
 
-## Regras de negócio
-
-- O `username` de cada usuário deve ser único na plataforma.
-- A nota de uma avaliação é um valor de **1 a 5**.
-- O texto da avaliação e a biografia do usuário são **opcionais**.
-- Todo comentário pertence a **uma única avaliação** e tem **um único autor**.
-- Todo filme possui **pelo menos um gênero**.
-- Uma mesma pessoa pode ter funções diferentes (direção, roteiro e elenco), inclusive no mesmo filme.
-- A classificação indicativa segue os valores: `L`, `10 anos`, `12 anos`, `14 anos`, `16 anos` e `18 anos`.
-
-## Estrutura do repositório
-
-```
-.
-├── README.md
-└── Modelagem_Lógica_BAN_1.xlsx   # Entidades, atributos e relacionamentos
-```
-
+---
