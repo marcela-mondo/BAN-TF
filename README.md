@@ -1,8 +1,6 @@
 # Plataforma de Avaliação de Filmes
 
-Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuários registram os filmes que assistiram, atribuem notas, escrevem avaliações e comentam nas avaliações de outros usuários. O repositório reúne o sumário executivo do domínio, o esquema conceitual (EER) e a modelagem lógica.
-
-> Projeto acadêmico da disciplina de Banco de Dados (BAN).
+Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuários registram os filmes que assistiram, atribuem notas, escrevem avaliações e comentam nas avaliações de outros usuários.
 
 **Usuários.** Para participar da plataforma, a pessoa se cadastra informando um *username* único, um nome de exibição e um e-mail, podendo preencher opcionalmente uma biografia para o seu perfil. O sistema registra a data de cadastro. Todo usuário é de um dos dois tipos, **Básico** ou **Premium**.
 
