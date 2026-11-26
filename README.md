@@ -25,10 +25,8 @@ Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuár
 | RI1 | O `username` do usuário deve ser único. |
 | RI2 | A `nota` da avaliação deve estar entre 1 e 5. |
 | RI3 | A `classificacao_indicativa` do filme deve ser um dos valores: L, 10, 12, 14, 16 ou 18 anos. |
-| RI4 | Todo usuário deve ser Básico ou Premium (a confirmar se a generalização é disjunta e total). |
-| RI5 | Todo filme deve ter pelo menos um gênero. |
-| RI6 | Todo comentário pertence a exatamente uma avaliação e tem exatamente um autor. |
-| RI7 | `texto_avaliacao` e `biografia` (de usuários) são opcionais. |
+| RI4 | Todo usuário deve ser Básico ou Premium. |
+| RI5 | `texto_avaliacao` e `biografia` de usuários são opcionais. |
 
 ---
 
