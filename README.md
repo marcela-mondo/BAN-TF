@@ -23,8 +23,10 @@ Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuár
 | RI1 | O `username` do usuário deve ser único. |
 | RI2 | A `nota` da avaliação deve estar entre 1 e 5. |
 | RI3 | A `classificacao_indicativa` do filme deve ser um dos valores: L, 10, 12, 14, 16 ou 18 anos. |
-| RI4 | Todo usuário deve ser Básico ou Premium. |
-| RI5 | `texto_avaliacao` e `biografia` de usuários são opcionais. |
+| RI4 | `texto_avaliacao` e `biografia` de usuários são opcionais. |
+| RI5 | Todo usuário deve ser Básico ou Premium. |
+| RI6 |  Enquanto `Básico` for verdadeiro (1), `Premium` deve ser falso (0). | 
+| RI7 |  Enquanto `Premium` for verdadeiro (1), `Básico` deve ser falso (0). |
 
 ---
 
@@ -45,13 +47,13 @@ Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuár
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
-| `ID_usuario` | Numérico | – | Chave primária/estrangeira | Usuário do tipo Básico (referencia Usuários) |
+| `ID_usuario` | Booleano | – | Chave primária/estrangeira | Usuário do tipo Básico (referencia Usuários) |
 
 #### Premium
 
 | Atributo | Domínio | Tamanho | Restrição | Descrição |
 |---|---|---|---|---|
-| `ID_usuario` | Numérico | – | Chave primária/estrangeira | Usuário do tipo Premium (referencia Usuários) |
+| `ID_usuario` | Booleano | – | Chave primária/estrangeira | Usuário do tipo Premium (referencia Usuários) |
 
 #### Filmes
 
