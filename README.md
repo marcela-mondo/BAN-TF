@@ -14,7 +14,7 @@ Projeto de banco de dados para uma rede social voltada ao cinema, na qual usuár
 
 ## 1. Esquema conceitual (EER)
 
-<img width="1249" height="786" alt="ban" src="https://github.com/user-attachments/assets/8113077d-1a5e-4563-a06b-4ffd1668a460" />
+<img width="1244" height="778" alt="BanModelo" src="https://github.com/user-attachments/assets/f14e85a3-a1e6-4316-9e04-a1aa24340ccc" />
 
 ### Restrições de integridade (RI)
 
